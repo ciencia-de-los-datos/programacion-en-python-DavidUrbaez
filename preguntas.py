@@ -21,7 +21,16 @@ def pregunta_01():
     214
 
     """
-    return
+
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col1 = [row[1] for row in rows]
+
+    return sum(map(int, col1))
 
 
 def pregunta_02():
@@ -39,7 +48,21 @@ def pregunta_02():
     ]
 
     """
-    return
+
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col0 = [row[0] for row in rows]
+    letters = sorted(set(col0))
+
+    out = {}
+    for letter in letters:
+        out[letter] = col0.count(letter)
+
+    return [(k, v) for k, v in out.items()]
 
 
 def pregunta_03():
@@ -57,7 +80,26 @@ def pregunta_03():
     ]
 
     """
-    return
+
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col0 = [row[0] for row in rows]
+    col1 = [row[1] for row in rows]
+
+    letters = sorted(set(col0))
+
+    out = {letter: 0 for letter in letters}
+    for letter, num in zip(col0, col1):
+        out[letter] += int(num)
+
+    return [(k, v) for k, v in out.items()]
+
+
+pregunta_03()
 
 
 def pregunta_04():
@@ -82,7 +124,22 @@ def pregunta_04():
     ]
 
     """
-    return
+
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col3 = [row[2] for row in rows]
+    months = [row.split("-")[1] for row in col3]
+    unique_months = sorted(set(months))
+
+    out = {}
+    for month in unique_months:
+        out[month] = months.count(month)
+
+    return [(k, v) for k, v in out.items()]
 
 
 def pregunta_05():
@@ -100,7 +157,22 @@ def pregunta_05():
     ]
 
     """
-    return
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col1 = [row[0] for row in rows]
+    col2 = [row[1] for row in rows]
+
+    letters = sorted(set(col1))
+
+    out = {letter: [] for letter in letters}
+    for letter, num in zip(col1, col2):
+        out[letter].append(int(num))
+
+    return [(k, max(v), min(v)) for k, v in out.items()]
 
 
 def pregunta_06():
@@ -125,7 +197,26 @@ def pregunta_06():
     ]
 
     """
-    return
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col5 = [row[4] for row in rows]
+
+    out = {}
+
+    for row in col5:
+        for register in row.split(","):
+            key, value = register.split(":")
+            if key not in out.keys():
+                out[key] = []
+            out[key].append(int(value))
+
+    list_of_tuples = [(k, min(v), max(v)) for k, v in out.items()]
+
+    return sorted(list_of_tuples, key=lambda x: x[0])
 
 
 def pregunta_07():
@@ -149,7 +240,21 @@ def pregunta_07():
     ]
 
     """
-    return
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col0 = [row[0] for row in rows]
+    col1 = [row[1] for row in rows]
+
+    indexes = sorted(set(col1))
+    out = {index: [] for index in indexes}
+    for letter, num in zip(col0, col1):
+        out[num].append(letter)
+
+    return [(int(k), v) for k, v in out.items()]
 
 
 def pregunta_08():
@@ -174,7 +279,21 @@ def pregunta_08():
     ]
 
     """
-    return
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col0 = [row[0] for row in rows]
+    col1 = [row[1] for row in rows]
+
+    indexes = sorted(set(col1))
+    out = {index: [] for index in indexes}
+    for letter, num in zip(col0, col1):
+        out[num].append(letter)
+
+    return [(int(k), sorted(set(v))) for k, v in out.items()]
 
 
 def pregunta_09():
@@ -197,7 +316,24 @@ def pregunta_09():
     }
 
     """
-    return
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col5 = [row[4] for row in rows]
+
+    out = {}
+
+    for row in col5:
+        for register in row.split(","):
+            key, value = register.split(":")
+            if key not in out.keys():
+                out[key] = 0
+            out[key] += 1
+
+    return dict(sorted(out.items()))
 
 
 def pregunta_10():
@@ -218,7 +354,24 @@ def pregunta_10():
 
 
     """
-    return
+
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col1 = [row[0] for row in rows]
+    col4 = [row[3] for row in rows]
+    col5 = [row[4] for row in rows]
+
+    out = []
+    for row_col1, row_col4, row_col5 in zip(col1, col4, col5):
+        out.append((
+            row_col1, len(row_col4.split(",")), len(row_col5.split(","))
+        ))
+
+    return out
 
 
 def pregunta_11():
@@ -239,7 +392,24 @@ def pregunta_11():
 
 
     """
-    return
+
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col2 = [row[1] for row in rows]
+    col4 = [row[3] for row in rows]
+
+    out = {}
+    for row_col2, row_col4 in zip(col2, col4):
+        for letter in row_col4.split(","):
+            if letter not in out.keys():
+                out[letter] = 0
+            out[letter] += int(row_col2)
+
+    return dict(sorted(out.items()))
 
 
 def pregunta_12():
@@ -257,4 +427,22 @@ def pregunta_12():
     }
 
     """
-    return
+
+    import csv
+
+    with open("./data.csv", "r") as csvfile:
+        reader_variable = csv.reader(csvfile, delimiter="	")
+        rows = list(reader_variable)
+
+    col1 = [row[0] for row in rows]
+    col5 = [row[4] for row in rows]
+
+    out = {}
+    for letter, row_col5 in zip(col1, col5):
+
+        if letter not in out.keys():
+            out[letter] = 0
+
+        out[letter] += sum([int(val.split(":")[1]) for val in row_col5.split(",")])
+
+    return dict(sorted(out.items()))
